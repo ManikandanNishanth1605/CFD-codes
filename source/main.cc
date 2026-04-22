@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "matplotlibcpp.h"
 #include <vector>
 
@@ -6,15 +7,16 @@ namespace plt = matplotlibcpp;
 using namespace std;
 
 int main() {
-    int N = 100;
+    int N = 10;
     double L = 1.0;
     double dx = L / (N - 1);
 
     double rho = 1.0;
     double gamma = 1.0;
-    double u = 10.0;
+    double u = 50.0;
     double F = rho * u;
     double D = gamma / dx;
+    double Pe = F / D; // Peclet Number
 
     vector<double> phi(N, 0.0);
     vector<double> x(N, 0.0);
@@ -34,8 +36,16 @@ int main() {
 
     // Assemble coefficients
     for (int i = 1; i < N-1; i++) {
-        aE[i] = D;
-        aW[i] = D + F;
+        if (fabs(Pe) < 2.0) {
+            // Central difference scheme
+            aE[i] = D - 0.5*F;
+            aW[i] = D + 0.5*F;
+        }
+        else {
+            // Upwind scheme
+            aE[i] = D;
+            aW[i] = D + F;
+        }
         aP[i] = aE[i] + aW[i];
         b[i] = 0.0;
     }
@@ -65,7 +75,7 @@ int main() {
     plt::xlabel("x");
     plt::ylabel("phi");
     plt::title("1D Steady-State Convection-Diffusion");
-    plt::save("conv-diff-u10_0.png");
+    plt::save("conv-diff-u50_0.png");
 
     return 0;
 }
