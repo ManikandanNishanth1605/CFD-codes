@@ -22,7 +22,7 @@ include_directories(
 )
 
 # Source files
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/source/*.cc)
+file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/source/laplace.cc)
 
 add_executable(plot_app ${SOURCES})
 
