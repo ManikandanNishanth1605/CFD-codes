@@ -7,13 +7,14 @@
 
 class Laplace2D{
     private:
-        Mesh2D& mesh;
-        Field2D& phi;
-        double tolerance;
-        int maxIter;
+        Mesh2D& mesh;      // Mesh
+        Field2D& phi;      // Field
+        double tolerance;  // Tolerance
+        int maxIter;       // Maximum iterations
+        double omega;      // Relaxation factor
     
     public:
-        Laplace2D(Mesh2D& mesh_, Field2D& phi_) : mesh(mesh_), phi(phi_), tolerance(1e-6), maxIter(10000) {}
+        Laplace2D(Mesh2D& mesh_, Field2D& phi_, double tol_, int maxIter_, double omega_) : mesh(mesh_), phi(phi_), tolerance(tol_), maxIter(maxIter_), omega(omega_) {}
 
         void setInitialValue(double value){
             // Set initial value of mesh for non-boundary nodes
@@ -55,7 +56,8 @@ class Laplace2D{
                 for (int i = 1; i < mesh.Nx - 1; i++){
                     for (int j = 1; j < mesh.Ny - 1; j++){
                         double old_phi = phi(i,j);
-                        phi(i,j) = 0.25*(phi(i+1,j) + phi(i-1,j) + phi(i,j+1) + phi(i,j-1));
+                        double phi_GS = 0.25 * (phi(i+1,j) + phi(i-1,j) + phi(i,j+1) + phi(i,j-1)); // Gauss-Seidel step
+                        phi(i, j) = (1 - omega) * old_phi + omega * phi_GS;
                         double err = fabs(phi(i,j) - old_phi);
 
                         if (err > maxErr) {maxErr = err;}
