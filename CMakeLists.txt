@@ -24,6 +24,6 @@ include_directories(
 # Source files
 file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/source/laplace.cc)
 
-add_executable(plot_app ${SOURCES})
+add_executable(run_app ${SOURCES})
 
-target_link_libraries(plot_app PRIVATE Python3::Python)
+target_link_libraries(run_app PRIVATE Python3::Python)

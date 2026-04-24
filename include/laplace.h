@@ -1,5 +1,6 @@
-#include "mesh.h"
-#include "field.h"
+#ifndef LAPLACE_H
+#define LAPLACE_H
+#include "vtk_writer.h"
 
 #include<iostream>
 #include<cmath>
@@ -48,4 +49,11 @@ class Laplace2D{
                 }
             }
         }
+
+        void writeVTK(const std::string& filename) {
+            VTKWriter::writeStructuredGrid2D(filename, phi, mesh);
+        }
+        
 };
+
+#endif

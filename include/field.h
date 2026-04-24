@@ -1,3 +1,5 @@
+#ifndef FIELD_H
+#define FIELD_H
 #include <vector>
 
 class Field2D{
@@ -17,3 +19,5 @@ class Field2D{
             return phi[i + j * Nx];
         }
 };
+
+#endif

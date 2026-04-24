@@ -1,3 +1,6 @@
+#ifndef MESH_H
+#define MESH_H
+
 class Mesh2D{
     public:
         int Nx, Ny;
@@ -13,3 +16,5 @@ class Mesh2D{
             dy = Ly / (Ny - 1);
         }
 };
+
+#endif
