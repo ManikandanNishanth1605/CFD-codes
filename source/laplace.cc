@@ -13,7 +13,8 @@ int main(){
     Field2D phi(mesh.Nx, mesh.Ny);      // Field is initiated
 
     Laplace2D solver(mesh, phi);        // Laplace solver is initiated
-    solver.applyBoundaryConditions();   // Enforce boundary conditions
+    solver.setBoundaryLeft(1.0);        // Enforce boundary condition
+    solver.setBoundaryBottom(1.0);        // Enforce boundary condition
     solver.solve();                     // Solve the Laplace equation
     solver.writeVTK(filename);          // VTK output file is written
 

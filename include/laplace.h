@@ -15,15 +15,38 @@ class Laplace2D{
     public:
         Laplace2D(Mesh2D& mesh_, Field2D& phi_) : mesh(mesh_), phi(phi_), tolerance(1e-6), maxIter(10000) {}
 
-        void applyBoundaryConditions(){
+        void setInitialValue(double value){
+            // Set initial value of mesh for non-boundary nodes
+            for (int i = 1; i < mesh.Nx - 1; i++) {
+                for (int j = 1; j < mesh.Ny - 1; j++){
+                    phi(i, j) = value; 
+                }
+            }
+        }
+
+        void setBoundaryLeft(double value){
+            // Left boundary
             for (int j = 0; j < mesh.Ny; j++) {
-                phi(0, j) = 1.0; // Left boundary
-                phi(mesh.Nx - 1, j) = 0.0; // Right boundary
-            }
+                phi(0, j) = value; 
+            } 
+        }
+        void setBoundaryRight(double value){
+            // Right boundary
+            for (int j = 0; j < mesh.Ny; j++) {
+                phi(mesh.Nx - 1, j) = value; 
+            } 
+        }
+        void setBoundaryTop(double value){
+            // Top boundary
             for (int i = 0; i < mesh.Nx; i++) {
-                phi(i, 0) = 0.0; // Bottom boundary
-                phi(i, mesh.Ny - 1) = 0.0; // Top boundary
-            }
+                phi(i, mesh.Ny - 1) = value; 
+            } 
+        }
+        void setBoundaryBottom(double value){
+            // Bottom boundary
+            for (int i = 0; i < mesh.Nx; i++) {
+                phi(i, 0) = value; 
+            } 
         }
 
         void solve(){
