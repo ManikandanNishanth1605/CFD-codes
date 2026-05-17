@@ -1,9 +1,7 @@
 #include <iostream>
 #include <cmath>
-#include "matplotlibcpp.h"
 #include <vector>
 
-namespace plt = matplotlibcpp;
 using namespace std;
 
 int main() {
@@ -71,11 +69,6 @@ int main() {
     }
 
     // Plotting results
-    plt::plot(x, phi);
-    plt::xlabel("x");
-    plt::ylabel("phi");
-    plt::title("1D Steady-State Convection-Diffusion");
-    plt::save("conv-diff-u50_0.png");
 
     return 0;
 }
